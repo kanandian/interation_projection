@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QApplication
 def main():
     app = 0
     app = QApplication(sys.argv)
-    application = component.ApplicationByPyqt()
+    application = component.Application()
     sys.exit(app.exec_())
 
 

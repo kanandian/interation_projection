@@ -39,13 +39,13 @@ class Leaf:
         self.rect.setY(self.position_y)
 
 
-class ApplicationByPyqt(QMainWindow):
+class Application(QMainWindow):
     def __init__(self):
         super().__init__()
 
         self.leaves = []
         self.backgound_color = constant.background_color
-        self.hand_dectect = hand_dectect.HandDectectByHandXML()
+        self.hand_dectect = hand_dectect.HandDectect()
 
         self.initUI()
         self.initTimer()
@@ -83,7 +83,7 @@ class ApplicationByPyqt(QMainWindow):
             self.update()
 
         else:
-            super(ApplicationByPyqt, self).timerEvent(event)
+            super(Application, self).timerEvent(event)
 
     def handle_hand_motion_by_mode(self):
         positions = self.hand_dectect.get_hand_positions(constant.dectect_mod)
@@ -124,14 +124,14 @@ class ApplicationByPyqt(QMainWindow):
             dist_y = leaf.rect.center().y()-y
             distance = math.sqrt(math.pow(dist_x, 2) + math.pow(dist_y, 2))
             if distance < constant.max_distance:
-                leaf.speed == constant.sweep_speed
+                leaf.speed = constant.sweep_speed
                 if dist_x < 0:
                     fa = True
                 if dist_y < 0:
                     fb = True
                 if dist_x == 0:
                     leaf.dirction_x = -1
-                    leaf.dirction_y = constant.sweep_speed
+                    leaf.dirction_y = leaf.speed
                     if fb:
                         leaf.dirction_y *= -1
                 else:

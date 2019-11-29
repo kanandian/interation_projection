@@ -2,7 +2,7 @@ import cv2
 import constant
 
 
-class HandDectectByHandXML:
+class HandDectect:
     def __init__(self):
         self.hand_cascade = cv2.CascadeClassifier(r'./resources/hand.xml')
         self.init_camera()
@@ -27,7 +27,6 @@ class HandDectectByHandXML:
 
     def get_hand_positions_by_mode1(self):
         res = []
-        # 探测图片中的人脸
         (ret, frame) = self.vc.read()
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         hands = self.hand_cascade.detectMultiScale(
@@ -69,9 +68,7 @@ class HandDectectByHandXML:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
             centerx = x + w / 2
             centery = y + h / 2
-            centerx *= constant.screen_width / constant.camera_width
-            centery *= constant.screen_height / constant.camera_height
-            res.append((x, y))
+            res.append((centerx, centery))
 
         if constant.show_camera:
             cv2.imshow('frame_with_result', cv2.flip(frame, 1, dst=None))
